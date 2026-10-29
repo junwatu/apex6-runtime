@@ -1,18 +1,4 @@
----
-license: mit
-library_name: apex6-runtime
-tags:
-  - robotics
-  - 3d-model
-  - six-axis
-  - gltf
-  - fbx
-  - unity
-  - threejs
-  - godot
----
-
-# APEX-6 — runtime bundle
+# APEX-6 - 3D Robotic Arm Simulator
 
 **APEX-6** is an original six-axis industrial robot: a 1.77 m reach-class arm
 modelled down to its bolts, modelled with clear panel gaps, seated markings and
@@ -20,8 +6,7 @@ armoured cable hoses. This bundle contains the **model** and **runtime control
 kits** for three engines, plus the documentation needed to load and drive it.
 
 > **This is a runtime/asset bundle.** It ships the model and the code that drives
-> it. It does **not** include the authoring project or the generators used to
-> build the model.
+> it.
 
 ```
 apex6-runtime/
