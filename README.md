@@ -1,5 +1,7 @@
 # APEX-6 - 3D Robotic Arm Simulator
 
+![apex6-unity](apex6-unity.png)
+
 **APEX-6** is an original six-axis industrial robot: a 1.77 m reach-class arm
 modelled down to its bolts, modelled with clear panel gaps, seated markings and
 armoured cable hoses. This bundle contains the **model** and **runtime control
