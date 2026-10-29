@@ -1,0 +1,21 @@
+{
+  "name": "com.apex6.robot",
+  "version": "1.0.0",
+  "displayName": "APEX-6 Six-Axis Robot Runtime",
+  "description": "Runtime control kit for the exported APEX-6 six-axis industrial robot. Drives the model's six joint pivots (forward kinematics), a parallel-jaw gripper, pose presets, an optional CCD IK, an in-game IMGUI control panel, and cable routing that makes the flexible hoses follow the arm. Ships no geometry of its own: load the provided model and add Apex6Controller to its root.",
+  "unity": "6000.0",
+  "unityRelease": "0f1",
+  "changelogUrl": "CHANGELOG.md",
+  "licensesUrl": "LICENSE.md",
+  "keywords": [
+    "robot",
+    "robotics",
+    "six-axis",
+    "kinematics",
+    "industrial",
+    "apex6"
+  ],
+  "author": {
+    "name": "APEX-6"
+  }
+}

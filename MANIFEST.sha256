@@ -1,0 +1,37 @@
+# APEX-6 runtime bundle v1.0.0
+# 34 files, 4586969 bytes
+
+26c204b7ac09e607b942180933b3581bf3511d8273a4e0e38d6deef927db37ef       1210  LICENSE
+c8ba5d458d6df97e004bafaf8e7147efa927961206e21272d06b6edfa0dfa1a9       5261  README.md
+44416e632f7996cc52dcc568b61a775460bf17efab008d01d4019ee2a3e8b168       5017  docs/CONTROLS.md
+ebebcf0877ceb39ce8a8be591f44d67daefd156166a707c88f76d4ff9ac88e16       6352  docs/MODEL.md
+0fbcd0204be3a43ee0cf7ee5df8e03faf23ab79bb0a2b9b6f3dca085aeddbf50       5429  godot/README.md
+883b7539af6748d09fd8236bb300c2a05f723bb69e7a1752b3f5c0e3ab856f2a       7254  godot/addons/apex6/apex6_cables.gd
+4110edd74b25eee37d063d6e5c6892cd1e737ffdd96f628962274c620190f1f3      12571  godot/addons/apex6/apex6_controller.gd
+2c6c8af8999087fed8b06a5605e2085555f9d5444358a7208ef30eaa620755f0        248  godot/addons/apex6/plugin.cfg
+cd4ba0998e61412481f37af56852f64e0de05016fde3bafff555aa4f3ac353bc        248  godot/addons/apex6/plugin.gd
+a1f6910d22d687d8dea452394206ac5f00e9fcfa1d7316840900a0d81dca696c       5697  godot/examples/apex6_demo.gd
+afde4a21c681f443bc9c4fe2b0e8a3c67a29e61666bac0cdb4f1bea4caed25bb       8219  model/apex6_joint_map.json
+7bf5ed5de824c561cd2a7de2697ec17c4645571c92896b75e7e15d31537d643a    1406364  model/apex6_robot.fbx
+5e618748c41c5ffb5bc43fe5190c7aa87126717b96777be76ea427152a20d6f7    1487480  model/apex6_robot.glb
+66537bd9bb31f7aa6f6810baca12833a2f2c2b04bc34d56dab3eae11aeef6605      94993  model/apex6_robot.urdf
+4370cb58a7bf56f8378dcdd132995c2826ba6224b1c1eddebc5046dbfad69895    1401820  model/apex6_robot_unity.fbx
+eff61a20834f2be9e750c9e34d0919b605b970a8bba29a65eac51942d9fa958c        352  unity/Apex6.Runtime.asmdef
+3205ade6c4d813c6fcecd998dea2aeb094b5808a44cb43f8e37b05ab0be981a8      14088  unity/Apex6Cables.cs
+0f0e5c0a97ae021d044c689d4b1bb594b11f6089b76e05f2876965d52a44af87      16129  unity/Apex6ControlPanel.cs
+9f7cc089408031f4b5a7baef4304407f7c5d639727738900a881d12577c88a3a      18054  unity/Apex6Controller.cs
+b3a36a09ee6e63afa4db0caace6689c6ec8bceda967c871abfa88452ec7401fb       1534  unity/Apex6Demo.cs
+06ecc3f360bfc174d1963f2dcc8359add46e818dda7a4c1ac8e3185baf4c1bc9       4473  unity/Apex6IK.cs
+f611c4b38e8ad680c919e706bc2d5bed3c406367b47a9fc3a7ee9aac64d2d0aa       7820  unity/Apex6JointMap.cs
+a43b364111b9e71838bdd6eed2607f37861d3c71bcfbd52bcb0b04e071e68463       5921  unity/Apex6SelfTest.cs
+074a9765e2271a16cf246167a90f58a9dfb997f3f3162df3889c4b0fa68d196b        297  unity/CHANGELOG.md
+fac7f4da969a915e90c2f356e92de61567f31f4054902a456a220fb5ba3d25af        414  unity/Editor/Apex6.Editor.asmdef
+fed3b9212f2422b4fbdf3814cf633b5d3041a662a6f6fb86206740e1beb8dfe8       5668  unity/Editor/Apex6EditorCheck.cs
+26c204b7ac09e607b942180933b3581bf3511d8273a4e0e38d6deef927db37ef       1210  unity/LICENSE.md
+789566cfeb7f439545bcd3aa050625e1696a7bb9ffb0bfeb741afa46ad25e7a9      10281  unity/README.md
+afde4a21c681f443bc9c4fe2b0e8a3c67a29e61666bac0cdb4f1bea4caed25bb       8219  unity/apex6_joint_map.json
+498f3884039b88177dfc3128cb425b1155843c9756dfa9bf24dead55aaf92387        763  unity/package.json
+9be3caced0d1ea40b94aae96c0448c0e65f63f385bdd75ccf85f12197e0e2ff9       5710  web/README.md
+84418bcc02a4553a84fc3f9212d28fc8cf8e3b2314aa2eb2a2bb9d960bd00d48      29039  web/apex6-runtime.js
+aa47b32009dc4de2335b1b8c9f8c58b4ffcf747bd23e93bd646ccae55fc79cb4       8364  web/index.html
+7332ed1bf98f2318bac70251e73adb61d59b6ffe563779af87f737c1ecd00acc        470  web/package.json

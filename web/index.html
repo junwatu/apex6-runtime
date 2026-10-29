@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>APEX-6 — web runtime demo</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #10141a; overflow: hidden;
+               font: 13px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; color: #d7dee8; }
+  #view { position: fixed; inset: 0; }
+  #panel { position: fixed; top: 12px; left: 12px; width: 268px; padding: 12px;
+           background: #171d26ee; border: 1px solid #2b3644; border-radius: 10px;
+           backdrop-filter: blur(6px); max-height: calc(100vh - 24px); overflow: auto; }
+  #panel h1 { margin: 0 0 2px; font-size: 13px; letter-spacing: .08em; color: #7fd1ff; }
+  #panel .sub { color: #77869a; margin-bottom: 10px; }
+  .row { display: grid; grid-template-columns: 26px 1fr 52px; gap: 6px; align-items: center;
+         margin: 3px 0; }
+  .row label { color: #8fa0b5; }
+  .row input[type=range] { width: 100%; }
+  .row .val { text-align: right; color: #eaf2ff; }
+  fieldset { border: 1px solid #2b3644; border-radius: 8px; margin: 10px 0 0; padding: 6px 8px 9px; }
+  legend { color: #77869a; padding: 0 4px; }
+  button { background: #202a37; color: #d7dee8; border: 1px solid #33404f; border-radius: 6px;
+           padding: 4px 7px; margin: 2px 3px 2px 0; cursor: pointer; font: inherit; }
+  button:hover { background: #2a3646; }
+  #readout { margin-top: 9px; color: #9fb2c7; white-space: pre; font-size: 12px; }
+  #status { color: #ffd479; }
+</style>
+</head>
+<body>
+<div id="view"></div>
+<div id="panel">
+  <h1>APEX-6 · web runtime</h1>
+  <div class="sub" id="status">loading…</div>
+  <div id="joints"></div>
+  <fieldset>
+    <legend>gripper (mm)</legend>
+    <div class="row"><label>◧</label><input id="grip" type="range" min="2" max="74" step="1" value="74"><span class="val" id="gripv">74</span></div>
+    <div><button data-grip="open">Open</button><button data-grip="close">Close</button></div>
+  </fieldset>
+  <fieldset>
+    <legend>poses</legend>
+    <div id="poses"></div>
+  </fieldset>
+  <fieldset>
+    <legend>options</legend>
+    <div><button id="cables">Cables: on</button><button id="smooth">Smooth: on</button></div>
+  </fieldset>
+  <div id="readout"></div>
+</div>
+
+<script type="importmap">
+{ "imports": {
+    "three": "https://unpkg.com/three@0.169.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.169.0/examples/jsm/"
+} }
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { Apex6Robot, Apex6Cables } from './apex6-runtime.js';
+
+// The bundle keeps the model in ../model/; override with ?model=&map=
+const q = new URLSearchParams(location.search);
+const MODEL = q.get('model') || '../model/apex6_robot.glb';
+const MAP = q.get('map') || '../model/apex6_joint_map.json';
+
+const status = document.getElementById('status');
+
+/* ---------- scene ---------- */
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.0;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+document.getElementById('view').appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x10141a);
+const camera = new THREE.PerspectiveCamera(38, innerWidth / innerHeight, 0.05, 60);
+camera.position.set(2.6, 1.7, 2.9);
+camera.lookAt(0.35, 0.85, 0);
+
+scene.add(new THREE.HemisphereLight(0xbcd2ff, 0x20242c, 0.9));
+const key = new THREE.DirectionalLight(0xffffff, 2.2); key.position.set(3, 5, 4); scene.add(key);
+const rim = new THREE.DirectionalLight(0x88aaff, 0.8); rim.position.set(-4, 3, -3); scene.add(rim);
+const grid = new THREE.GridHelper(12, 24, 0x33404f, 0x222c38); scene.add(grid);
+scene.add(new THREE.AxesHelper(0.4));
+
+let orbit = null;
+try {
+  const { OrbitControls } = await import('three/addons/controls/OrbitControls.js');
+  orbit = new OrbitControls(camera, renderer.domElement);
+  orbit.target.set(0.35, 0.85, 0);
+  orbit.update();
+} catch { /* optional */ }
+
+/* ---------- robot ---------- */
+const [gltf, map] = await Promise.all([
+  new GLTFLoader().loadAsync(MODEL),
+  fetch(MAP).then((r) => r.json()),
+]);
+
+const robot = new Apex6Robot({ root: gltf.scene, map });
+if (orbit) orbit.target.set(0.2, 0.9, 0);
+scene.add(gltf.scene);
+robot.prepare();
+
+const cables = new Apex6Cables(robot, { spineSamples: 24, ringSegments: 14 });
+cables.prepare();
+
+const st = robot.selfTest();
+status.textContent =
+  `${robot.joints.filter(Boolean).length}/6 pivots · ${cables.cables.filter((c) => c.ok).length} cables · ` +
+  `FK ${(st.maxError * 1000).toFixed(3)} mm ${st.passes ? '✓' : '✗'}`;
+status.style.color = st.passes ? '#7ee787' : '#ff7b72';
+console.log('APEX-6 conversion:', robot.conversionNote);
+
+/* ---------- UI ---------- */
+const jointsEl = document.getElementById('joints');
+const sliders = [];
+const NAMES = ['J1 waist', 'J2 shoulder', 'J3 elbow', 'J4 roll', 'J5 pitch', 'J6 roll'];
+for (let i = 0; i < robot.map.jointCount; i++) {
+  const row = document.createElement('div');
+  row.className = 'row';
+  row.innerHTML = `<label>${NAMES[i].split(' ')[0]}</label>
+    <input type="range" min="${robot.map.limitMin(i)}" max="${robot.map.limitMax(i)}" step="0.5" value="0">
+    <span class="val">0.0</span>`;
+  jointsEl.appendChild(row);
+  const input = row.querySelector('input');
+  const out = row.querySelector('.val');
+  input.addEventListener('input', () => { robot.setJoint(i, +input.value); });
+  sliders.push({ input, out });
+}
+
+const gripEl = document.getElementById('grip');
+const gripV = document.getElementById('gripv');
+gripEl.addEventListener('input', () => robot.setGripper(+gripEl.value / 1000));
+document.querySelector('[data-grip=open]').onclick = () => { robot.openGripper(); sync(); };
+document.querySelector('[data-grip=close]').onclick = () => { robot.closeGripper(); sync(); };
+
+const POSES = {
+  Zero: [0, 0, 0, 0, 0, 0],
+  Home: robot.map.homeDeg(),
+  Reach: [0, -55, 95, 0, 35, 0],
+  Fold: [0, 60, -115, 0, -110, 0],
+  Inspect: [35, -25, 80, 20, 60, 45],
+  Wide: [-70, -20, 40, 90, -30, 150],
+};
+const posesEl = document.getElementById('poses');
+for (const [name, pose] of Object.entries(POSES)) {
+  const b = document.createElement('button');
+  b.textContent = name;
+  b.onclick = () => { robot.setJoints(pose); sync(); };
+  posesEl.appendChild(b);
+}
+
+let cableOn = true;
+let smooth = true;
+const cableBtn = document.getElementById('cables');
+cableBtn.onclick = () => { cableOn = !cableOn; cables.routing = cableOn; cableBtn.textContent = `Cables: ${cableOn ? 'on' : 'off'}`; if (cableOn) cables.update(); };
+const smoothBtn = document.getElementById('smooth');
+smoothBtn.onclick = () => { smooth = !smooth; smoothBtn.textContent = `Smooth: ${smooth ? 'on' : 'off'}`; };
+
+const readout = document.getElementById('readout');
+function sync() {
+  for (let i = 0; i < sliders.length; i++) {
+    const v = robot.getJoint(i);
+    sliders[i].input.value = v;
+    sliders[i].out.textContent = v.toFixed(1);
+  }
+  gripEl.value = Math.round(robot.getGripper() * 1000);
+  gripV.textContent = gripEl.value;
+}
+
+/* ---------- loop ---------- */
+const clock = new THREE.Clock();
+robot.applyCommandNow();
+cables.update();
+sync();
+
+renderer.setAnimationLoop(() => {
+  const dt = Math.min(clock.getDelta(), 0.05);
+  robot.update(dt, smooth ? 1 : 0);   // rate-limited toward the command
+  cables.update();
+  // keep the sliders live when something else drives the arm
+  for (let i = 0; i < sliders.length; i++) {
+    const a = robot.map.clamp(i, robot.getJoints()[i]);
+    if (document.activeElement !== sliders[i].input) {
+      sliders[i].input.value = a;
+      sliders[i].out.textContent = a.toFixed(1);
+    }
+  }
+  const t = robot.tcpWorld();
+  readout.textContent =
+    `TCP  ${t.x.toFixed(3)}  ${t.y.toFixed(3)}  ${t.z.toFixed(3)} m\n` +
+    `gap  ${(robot.getGripper() * 1000).toFixed(1)} mm`;
+  if (orbit) orbit.update();
+  renderer.render(scene, camera);
+});
+
+addEventListener('resize', () => {
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth, innerHeight);
+});
+</script>
+</body>
+</html>

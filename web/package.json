@@ -1,0 +1,19 @@
+{
+  "name": "apex6-web",
+  "version": "1.0.0",
+  "description": "APEX-6 six-axis robot runtime for three.js / any web scene graph",
+  "type": "module",
+  "main": "apex6-runtime.js",
+  "module": "apex6-runtime.js",
+  "exports": {
+    ".": "./apex6-runtime.js"
+  },
+  "files": [
+    "apex6-runtime.js",
+    "index.html",
+    "README.md"
+  ],
+  "keywords": ["robotics", "three.js", "kinematics", "apex6"],
+  "license": "SEE LICENSE IN ../LICENSE",
+  "sideEffects": false
+}

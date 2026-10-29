@@ -1,0 +1,440 @@
+{
+  "robot": "APEX-6",
+  "units": "meters",
+  "note": "Blender is Z-up; the FBX is exported Y-up. `unity_local_axis` is the joint axis mapped to the Unity frame the exporter assumes; `blender_axis_vec` is the raw Blender axis. The controller solves the importer's actual conversion from `rest_points` and calibrates the axes against the imported rig, so it works whether Unity baked the conversion into the top pivot (FBX) or pre-converted the whole hierarchy (glTF).",
+  "cables": [
+    {
+      "name": "Cable_BaseToWaist",
+      "radius": 0.0125,
+      "slack": 0.028,
+      "bow": [
+        -1.0,
+        -0.35,
+        0.1
+      ],
+      "link_a": "BASE",
+      "point_a": [
+        -0.196,
+        -0.062,
+        0.118
+      ],
+      "link_b": "J1",
+      "point_b": [
+        -0.15,
+        -0.104,
+        0.332
+      ]
+    },
+    {
+      "name": "Cable_WaistToArm",
+      "radius": 0.0105,
+      "slack": 0.03,
+      "bow": [
+        -0.85,
+        -0.5,
+        0.15
+      ],
+      "link_a": "J1",
+      "point_a": [
+        -0.168,
+        0.0,
+        0.392
+      ],
+      "link_b": "J2",
+      "point_b": [
+        -0.056,
+        -0.05,
+        0.13
+      ]
+    },
+    {
+      "name": "Cable_ArmToForearm",
+      "radius": 0.0095,
+      "slack": 0.034,
+      "bow": [
+        -1.0,
+        0.1,
+        0.0
+      ],
+      "link_a": "J2",
+      "point_a": [
+        -0.05,
+        0.0,
+        0.318
+      ],
+      "link_b": "J3",
+      "point_b": [
+        -0.048,
+        0.0,
+        0.112
+      ]
+    },
+    {
+      "name": "Cable_ForearmToWrist",
+      "radius": 0.0085,
+      "slack": 0.026,
+      "bow": [
+        -1.0,
+        0.3,
+        0.0
+      ],
+      "link_a": "J3",
+      "point_a": [
+        -0.046,
+        0.052,
+        0.3
+      ],
+      "link_b": "J4",
+      "point_b": [
+        0.032,
+        0.056,
+        -0.028
+      ]
+    },
+    {
+      "name": "Cable_WristToGripper",
+      "radius": 0.0075,
+      "slack": 0.022,
+      "bow": [
+        -0.6,
+        0.7,
+        0.0
+      ],
+      "link_a": "J4",
+      "point_a": [
+        0.048,
+        0.0,
+        -0.02
+      ],
+      "link_b": "GRIP",
+      "point_b": [
+        0.055,
+        0.0,
+        0.052
+      ]
+    }
+  ],
+  "joints": [
+    {
+      "index": 1,
+      "name": "CTRL_J1_Waist",
+      "short": "J1",
+      "role": "J1_Waist",
+      "blender_axis": "Z",
+      "blender_axis_vec": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "unity_local_axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "limit_min_deg": -170.0,
+      "limit_max_deg": 170.0,
+      "home_deg": 0.0,
+      "max_speed_deg_s": 120.3211,
+      "max_accel_deg_s2": 240.6423,
+      "max_jerk_deg_s3": 2406.4227,
+      "torque_nm": 1200.0
+    },
+    {
+      "index": 2,
+      "name": "CTRL_J2_Shoulder",
+      "short": "J2",
+      "role": "J2_Shoulder",
+      "blender_axis": "Y",
+      "blender_axis_vec": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "unity_local_axis": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "limit_min_deg": -70.0,
+      "limit_max_deg": 66.0,
+      "home_deg": -20.0,
+      "max_speed_deg_s": 105.9972,
+      "max_accel_deg_s2": 206.2648,
+      "max_jerk_deg_s3": 2062.6481,
+      "torque_nm": 1500.0
+    },
+    {
+      "index": 3,
+      "name": "CTRL_J3_Elbow",
+      "short": "J3",
+      "role": "J3_Elbow",
+      "blender_axis": "Y",
+      "blender_axis_vec": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "unity_local_axis": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "limit_min_deg": -120.0,
+      "limit_max_deg": 132.0,
+      "home_deg": 70.0,
+      "max_speed_deg_s": 117.4563,
+      "max_accel_deg_s2": 229.1831,
+      "max_jerk_deg_s3": 2291.8312,
+      "torque_nm": 900.0
+    },
+    {
+      "index": 4,
+      "name": "CTRL_J4_WristRoll",
+      "short": "J4",
+      "role": "J4_WristRoll",
+      "blender_axis": "Z",
+      "blender_axis_vec": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "unity_local_axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "limit_min_deg": -185.0,
+      "limit_max_deg": 185.0,
+      "home_deg": 0.0,
+      "max_speed_deg_s": 183.3465,
+      "max_accel_deg_s2": 366.693,
+      "max_jerk_deg_s3": 3666.9299,
+      "torque_nm": 180.0
+    },
+    {
+      "index": 5,
+      "name": "CTRL_J5_WristPitch",
+      "short": "J5",
+      "role": "J5_WristPitch",
+      "blender_axis": "Y",
+      "blender_axis_vec": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "unity_local_axis": [
+        0.0,
+        0.0,
+        -1.0
+      ],
+      "limit_min_deg": -138.0,
+      "limit_max_deg": 138.0,
+      "home_deg": 55.0,
+      "max_speed_deg_s": 174.7521,
+      "max_accel_deg_s2": 349.5043,
+      "max_jerk_deg_s3": 3495.0426,
+      "torque_nm": 180.0
+    },
+    {
+      "index": 6,
+      "name": "CTRL_J6_ToolRoll",
+      "short": "J6",
+      "role": "J6_ToolRoll",
+      "blender_axis": "Z",
+      "blender_axis_vec": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "unity_local_axis": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "limit_min_deg": -350.0,
+      "limit_max_deg": 350.0,
+      "home_deg": 0.0,
+      "max_speed_deg_s": 206.2648,
+      "max_accel_deg_s2": 412.5296,
+      "max_jerk_deg_s3": 4125.2961,
+      "torque_nm": 90.0
+    }
+  ],
+  "rest_points": [
+    {
+      "name": "CTRL_J1_Waist",
+      "blender": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "CTRL_J2_Shoulder",
+      "blender": [
+        0.07,
+        0.0,
+        0.45
+      ]
+    },
+    {
+      "name": "CTRL_J3_Elbow",
+      "blender": [
+        0.07,
+        0.0,
+        1.05
+      ]
+    },
+    {
+      "name": "CTRL_J4_WristRoll",
+      "blender": [
+        0.07,
+        0.0,
+        1.49
+      ]
+    },
+    {
+      "name": "CTRL_J5_WristPitch",
+      "blender": [
+        0.07,
+        0.0,
+        1.49
+      ]
+    },
+    {
+      "name": "CTRL_J6_ToolRoll",
+      "blender": [
+        0.07,
+        0.0,
+        1.61
+      ]
+    },
+    {
+      "name": "CTRL_Gripper",
+      "blender": [
+        0.07,
+        0.0,
+        1.61
+      ]
+    },
+    {
+      "name": "CTRL_TCP",
+      "blender": [
+        0.07,
+        0.0,
+        1.77
+      ]
+    },
+    {
+      "name": "CTRL_FingerL",
+      "blender": [
+        0.07,
+        -0.061,
+        1.61
+      ]
+    },
+    {
+      "name": "CTRL_FingerR",
+      "blender": [
+        0.07,
+        0.061,
+        1.61
+      ]
+    }
+  ],
+  "gripper": {
+    "root": "CTRL_Gripper",
+    "fingers": {
+      "L": "CTRL_FingerL",
+      "R": "CTRL_FingerR"
+    },
+    "unity_travel_axis": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "note_travel_axis": "reference only (glTF convention). The FBX/glTF importers place the conversion at different levels, so Apex6Controller derives the real finger travel axis from the imported finger rest positions.",
+    "opening_min": 0.002,
+    "opening_max": 0.074,
+    "pad_face_offset": 0.024,
+    "finger_half_open": 0.061,
+    "note": "opening == clear gap between the pad faces; finger centre-line sits at opening/2 + pad_face_offset."
+  },
+  "tcp": {
+    "name": "CTRL_TCP",
+    "offset": 0.16
+  },
+  "self_test": {
+    "note": "expected TCP in BLENDER (Z-up) metres for each pose (degrees); the C# self test maps these through the solved conversion and compares with the live TCP.",
+    "tolerance_m": 0.001,
+    "poses_deg": [
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        -20.0,
+        70.0,
+        0.0,
+        55.0,
+        0.0
+      ],
+      [
+        0.0,
+        -45.0,
+        90.0,
+        0.0,
+        30.0,
+        0.0
+      ],
+      [
+        90.0,
+        20.0,
+        40.0,
+        60.0,
+        -90.0,
+        120.0
+      ],
+      [
+        -135.0,
+        -60.0,
+        120.0,
+        -150.0,
+        100.0,
+        -200.0
+      ]
+    ],
+    "tcp_blender": [
+      [
+        0.07,
+        0.0,
+        1.77
+      ],
+      [
+        0.472307,
+        0.0,
+        1.224173
+      ],
+      [
+        0.227322,
+        0.0,
+        1.25786
+      ],
+      [
+        0.242487,
+        0.586263,
+        1.355059
+      ],
+      [
+        0.065195,
+        0.260177,
+        1.152499
+      ]
+    ]
+  }
+}
