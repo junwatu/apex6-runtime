@@ -10,6 +10,8 @@ kits** for three engines, plus the documentation needed to load and drive it.
 > **This is a runtime/asset bundle.** It ships the model and the code that drives
 > it.
 
+*Made with **DeepSeek V4.1 Flash** on **GMI Cloud** — [build thread on X](https://x.com/junwatu/status/2115706179414528093).*
+
 ```
 apex6-runtime/
   README.md            this file
@@ -110,6 +112,15 @@ kinematics (`fk_position64`), not against itself:
 Re-run the self test on your own import from any runtime (see each README) — it
 compares the live tool centre point against the expected pose and reports the
 worst error.
+
+## Built with
+
+APEX-6 was built with **DeepSeek V4.1 Flash**, running on **GMI Cloud**. The model
+drives Blender head-less from a single shared parametric configuration, so every
+casting, joint, cable route, runtime and document in this bundle came out of that
+loop — and each one was then checked against the measurements above.
+
+Build thread: <https://x.com/junwatu/status/2115706179414528093>
 
 ## License
 
