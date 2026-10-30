@@ -104,6 +104,7 @@ kinematics (`fk_position64`), not against itself:
 | Unity live import | Editor 6000.6.7f1, FBX **and** GLB imported | 10/10 pivots, **5/5 FK poses ≤ 0.003 mm** |
 | web runtime | head-less Node over the shipped `.glb`, both import conventions | **5.0e-7 m** |
 | Godot runtime | head-less Godot 4.7.2 over the shipped `.glb` | **2.9e-5 m** (float32 floor) |
+| Godot render | windowed Godot 4.7.2 (Forward+), five poses | arm articulates, cables follow; zero TCP **0.070, 1.770, 0.000 m** |
 | cable routing | rebuilt tubes vs their attachment transforms / the authored spine | endpoint ≤ **0.0006 mm**, bulge ≤ **0.0007 mm** |
 
 Re-run the self test on your own import from any runtime (see each README) — it

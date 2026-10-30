@@ -128,6 +128,12 @@ Godot **4.7.2** run: **2.9e-5 m** worst error over the five poses (tolerance
 bulge matching the formula exactly. (The residual is Godot's `Vector3`
 single-precision floor, not a wiring error.)
 
+The added **render test** loads the shipped `.glb` in a real (windowed) Godot
+4.7.2 / Forward+ run, poses the arm through five poses and writes a PNG per pose
+(`output/renders/godot/`). The arm articulates through its full range and the
+cable tubes re-route with it in every frame; the zero-pose TCP reads
+`(0.070, 1.770, 0.000) m`, exactly the expected tool position.
+
 ## License
 
 See `../LICENSE`.
